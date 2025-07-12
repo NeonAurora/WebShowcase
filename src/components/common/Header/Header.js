@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { useThemeColors, useNavigationColors } from '@/hooks/useThemeColor';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import { 
   AppBar, 
   Toolbar, 
@@ -104,32 +105,33 @@ const NavigationItem = ({ item, onClick, isMobile = false }) => {
         whileHover={{ x: 8 }}
         whileTap={{ scale: 0.95 }}
       >
-        <ListItemButton
-          component="a"
-          href={item.href}
-          onClick={onClick}
-          sx={{
-            borderRadius: 2,
-            mx: 1,
-            '&:hover': {
-              background: `${themeColors.primary}10`,
-              '& .MuiListItemText-primary': {
-                color: themeColors.primary
-              }
-            }
-          }}
-        >
-          <ListItemText 
-            primary={item.name}
+        <Link href={item.href} style={{ textDecoration: "none" }}>
+          <ListItemButton
+            onClick={onClick}
             sx={{
-              '& .MuiListItemText-primary': {
-                fontWeight: 600,
-                color: themeColors.text,
-                transition: 'color 0.2s ease'
+              borderRadius: 2,
+              mx: 1,
+              '&:hover': {
+                background: `${themeColors.primary}10`,
+                '& .MuiListItemText-primary': {
+                  color: themeColors.primary
+                }
               }
             }}
-          />
-        </ListItemButton>
+          >
+            <ListItemText 
+              primary={item.name}
+              sx={{
+                '& .MuiListItemText-primary': {
+                  fontWeight: 600,
+                  color: themeColors.text,
+                  transition: 'color 0.2s ease'
+                }
+              }}
+            />
+          </ListItemButton>
+        </Link>
+
       </motion.div>
     );
   }
@@ -139,9 +141,8 @@ const NavigationItem = ({ item, onClick, isMobile = false }) => {
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.95 }}
     >
+      <Link href={item.href} passHref legacyBehavior>
       <Button
-        component="a"
-        href={item.href}
         sx={{
           color: themeColors.text,
           fontWeight: 600,
@@ -173,6 +174,8 @@ const NavigationItem = ({ item, onClick, isMobile = false }) => {
       >
         {item.name}
       </Button>
+    </Link>
+
     </motion.div>
   );
 };
